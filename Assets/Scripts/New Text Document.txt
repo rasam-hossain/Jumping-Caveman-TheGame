@@ -1,0 +1,1 @@
+A backup for mainscript and ninjascript has been created before deleting everything related to the weather maker

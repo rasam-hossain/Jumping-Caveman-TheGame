@@ -1,0 +1,157 @@
+fileFormatVersion: 2
+guid: 4df0382fdad6a6f45a35cc072a5368e6
+timeCreated: 1466475361
+licenseType: Free
+TextureImporter:
+  fileIDToRecycleName:
+    21300000: stonePole_0
+  serializedVersion: 2
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 1
+    linearTexture: 0
+    correctGamma: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+  isReadable: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 0
+  cubemapConvolution: 0
+  cubemapConvolutionSteps: 7
+  cubemapConvolutionExponent: 1.5
+  seamlessCubemap: 0
+  textureFormat: -1
+  maxTextureSize: 2048
+  textureSettings:
+    filterMode: -1
+    aniso: 16
+    mipBias: -1
+    wrapMode: 1
+  nPOTScale: 0
+  lightmap: 0
+  rGBM: 0
+  compressionQuality: 50
+  allowsAlphaSplitting: 0
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spritePixelsToUnits: 100
+  alphaIsTransparency: 1
+  textureType: 8
+  buildTargetSettings: []
+  spriteSheet:
+    sprites:
+    - name: stonePole_0
+      rect:
+        serializedVersion: 2
+        x: 30
+        y: 60
+        width: 200
+        height: 1286
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 2, w: 1}
+      outline:
+      - - {x: 75, y: -516}
+        - {x: 75, y: -513}
+        - {x: 89, y: -511}
+        - {x: 91, y: -507}
+        - {x: 91, y: -497}
+        - {x: 89, y: -449}
+        - {x: 88, y: -426}
+        - {x: 87, y: -388}
+        - {x: 88, y: -387}
+        - {x: 89, y: -350}
+        - {x: 90, y: -312}
+        - {x: 91, y: -272}
+        - {x: 92, y: -233}
+        - {x: 92, y: -198}
+        - {x: 94, y: -198}
+        - {x: 93, y: -175}
+        - {x: 90, y: -153}
+        - {x: 86, y: -148}
+        - {x: 89, y: -141}
+        - {x: 88, y: -122}
+        - {x: 93, y: -73}
+        - {x: 93, y: 57}
+        - {x: 94, y: 58}
+        - {x: 96, y: 76}
+        - {x: 94, y: 81}
+        - {x: 84, y: 80}
+        - {x: 87, y: 96}
+        - {x: 96, y: 103}
+        - {x: 97, y: 115}
+        - {x: 100, y: 170}
+        - {x: 100, y: 233}
+        - {x: 97, y: 239}
+        - {x: 93, y: 246}
+        - {x: 93, y: 307}
+        - {x: 91, y: 309}
+        - {x: 94, y: 313}
+        - {x: 94, y: 386}
+        - {x: 96, y: 394}
+        - {x: 99, y: 419}
+        - {x: 99, y: 429}
+        - {x: 94, y: 454}
+        - {x: 93, y: 454}
+        - {x: 93, y: 613}
+        - {x: 63, y: 643}
+        - {x: 16, y: 643}
+        - {x: 1, y: 641}
+        - {x: -15, y: 643}
+        - {x: -66, y: 643}
+        - {x: -95, y: 614}
+        - {x: -95, y: 532}
+        - {x: -96, y: 531}
+        - {x: -98, y: 492}
+        - {x: -100, y: 454}
+        - {x: -100, y: 341}
+        - {x: -88, y: 330}
+        - {x: -97, y: 326}
+        - {x: -99, y: 324}
+        - {x: -99, y: 307}
+        - {x: -98, y: 286}
+        - {x: -96, y: 236}
+        - {x: -100, y: 203}
+        - {x: -100, y: 120}
+        - {x: -95, y: 67}
+        - {x: -87, y: 58}
+        - {x: -93, y: 58}
+        - {x: -95, y: 56}
+        - {x: -95, y: 37}
+        - {x: -92, y: 34}
+        - {x: -95, y: 30}
+        - {x: -95, y: -61}
+        - {x: -93, y: -79}
+        - {x: -95, y: -101}
+        - {x: -95, y: -272}
+        - {x: -96, y: -273}
+        - {x: -100, y: -306}
+        - {x: -100, y: -377}
+        - {x: -99, y: -403}
+        - {x: -98, y: -430}
+        - {x: -96, y: -483}
+        - {x: -95, y: -496}
+        - {x: -93, y: -502}
+        - {x: -91, y: -506}
+        - {x: -95, y: -529}
+        - {x: -95, y: -614}
+        - {x: -66, y: -643}
+        - {x: 63, y: -643}
+        - {x: 93, y: -615}
+        - {x: 93, y: -528}
+    outline: []
+  spritePackingTag: 
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

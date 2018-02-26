@@ -1,0 +1,21 @@
+fileFormatVersion: 2
+guid: d0c1b22e4d39f4942b98048ac867db7c
+timeCreated: 1474915870
+licenseType: Free
+MonoImporter:
+  serializedVersion: 2
+  defaultReferences:
+  - WeatherScript: {instanceID: 0}
+  - playerObject: {instanceID: 0}
+  - powerBarObject: {instanceID: 0}
+  - poleObjectRock: {instanceID: 0}
+  - poleObjectBrick: {instanceID: 0}
+  - poleObjectBrickAndGrass: {instanceID: 0}
+  - poleObjectPipeAndIce: {instanceID: 0}
+  - poleObjectIce: {instanceID: 0}
+  - poleEndObject: {instanceID: 0}
+  executionOrder: 50
+  icon: {instanceID: 0}
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 
