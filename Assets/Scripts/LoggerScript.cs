@@ -3,8 +3,8 @@ using System.Collections;
 
 public class LoggerScript : MonoBehaviour {
 
-    string playerScoreWithoutMagnetism = ""; // Setting up the playerScoreWithoutMagnetism 
-    string playerScoreWithoutAssistance = ""; // Setting up the playerScoreWithoutMagnetism 
+    //string playerScoreWithoutMagnetism = ""; // Setting up the playerScoreWithoutMagnetism 
+    //string playerScoreWithoutAssistance = ""; // Setting up the playerScoreWithoutMagnetism 
     string successWithoutAnyTypeOfAssist = "";
     string prePoleNumber = "", prePower = "", preDistanceToTheNearestPole = "";
     bool LogData;

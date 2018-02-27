@@ -12,13 +12,13 @@ public class PowerScript : MonoBehaviour
 
     void Start()
     {
+        playerObject = GameObject.FindGameObjectWithTag("Player");   // Find the player gameObject with Player Tag
         tag = "Power";              // tagging the object as "Power"
         powerbar.size = 0f;         // Initially the size of the power bar is 0%  
     }
 
     void Update()
     {
-        playerObject = GameObject.FindGameObjectWithTag("Player");   // Find the player gameObject with Player Tag
         //float playerYPosition = playerObject.transform.position.y;    // Find the player's Y position
         float playersXvelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity.x;
         float playersYvelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity.y;
@@ -34,7 +34,11 @@ public class PowerScript : MonoBehaviour
             chargePower = 0;							// setting the temporary chargePower value back to 0	
             powerbar.size = 0f;							// powerbar set back to zero again for the next jump
         }
-        if(chargePowerSender > 0f) saveChargePower(chargePowerSender); // here, a new function is called to send it right away to the ninja script
+
+        if (chargePowerSender > 0f)
+        {
+            saveChargePower(chargePowerSender); // here, a new function is called to send it right away to the ninja script
+        }
     }
 
     public void saveChargePower(float chargePowerSender)

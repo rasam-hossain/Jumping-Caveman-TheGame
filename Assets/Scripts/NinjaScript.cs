@@ -19,7 +19,6 @@ public class NinjaScript : MonoBehaviour
 
     private rayCastLogic ray;
     AudioSource gameSounds;
-    //public AudioClip[] sounds;
     public AudioClip audioJump;
     public AudioClip audioFall;
     public AudioClip gameOverVoice;
@@ -45,7 +44,7 @@ public class NinjaScript : MonoBehaviour
     private float prevPoleCollX = 0;
     private double rangeOfParabola = 0;                 // distance calculated for the player to fall down
     private double requiredRange = 0;
-    private double requiredDistance = 0;
+    //private double requiredDistance = 0;
     private float playerInitialXPosition;
     private float playerInitialYPosition;
 
@@ -69,11 +68,10 @@ public class NinjaScript : MonoBehaviour
     {
         // Setting the audio Sources
         gameSounds = GetComponent<AudioSource>();
-        //audioJump = sounds[0];
-        //audioFall = sounds[1];
 
         // Animation Stuffs
         animator = transform.GetComponentInChildren<Animator>();
+        
         // Initially setting all the animation to false
         animator.SetBool("doJump", false);
         animator.SetBool("doIdle", false);
@@ -162,7 +160,7 @@ public class NinjaScript : MonoBehaviour
             string[] values = Regex.Split(valueLine, ",");
             columnX.Add(values[0]);
             columnMagnetismLevel.Add(values[2]);
-            if (mainScript.TrajectoryAssistanceOn == true && mainScript.assistanceType == MainScript.TypeOfAssitance.assistanceFromConfig)
+            if (mainScript.trajectoryAssistanceOn == true && mainScript.assistanceType == MainScript.TypeOfAssitance.assistanceFromConfig)
                 columnAssistanceLevel.Add(values[6]);
         }
 
@@ -202,8 +200,8 @@ public class NinjaScript : MonoBehaviour
 
         // Now set the pole magnetism turned on only for one pole that is highly possible for the player to jump onto - but skip the one he was previously on
         GameObject[] poleMagObjects;
-        if (mainScript.MagnetismOn) poleMagObjects = GameObject.FindGameObjectsWithTag("PoleMagnetism");
-        else if (mainScript.TrajectoryAssistanceOn) poleMagObjects = GameObject.FindGameObjectsWithTag("Pole");
+        if (mainScript.magnetismOn) poleMagObjects = GameObject.FindGameObjectsWithTag("PoleMagnetism");
+        else if (mainScript.trajectoryAssistanceOn) poleMagObjects = GameObject.FindGameObjectsWithTag("Pole");
         else poleMagObjects = null;
         counter = 0;
         foreach (GameObject pole in poleMagObjects)
@@ -219,14 +217,14 @@ public class NinjaScript : MonoBehaviour
                 nearestPoleYPosition = pole.transform.position.y;
 
                 // To turn on Trajectory Assistance you must turn on both Trajectory Assistance and any other assistance method in the inspector
-                if (mainScript.TrajectoryAssistanceOn && mainScript.assistanceType == MainScript.TypeOfAssitance.assistanceFromConfig)
+                if (mainScript.trajectoryAssistanceOn && mainScript.assistanceType == MainScript.TypeOfAssitance.assistanceFromConfig)
                 {
                     assistOrHindLevel = float.Parse(columnAssistanceLevel[counter]);
                     if (assistOrHindLevel > 0) assistanceLevel = assistOrHindLevel / 100F;
                     else if (assistOrHindLevel < 0) hindranceLevel = Math.Abs(assistOrHindLevel / 100F);
                 }
                 // Random Threshold Method (Trajectory Asssitance must be on too !) 
-                else if(mainScript.TrajectoryAssistanceOn && mainScript.assistanceType == MainScript.TypeOfAssitance.randomThresholdMethod)
+                else if(mainScript.trajectoryAssistanceOn && mainScript.assistanceType == MainScript.TypeOfAssitance.randomThresholdMethod)
                 {
                     
                     System.Random rnd = new System.Random();
@@ -252,32 +250,15 @@ public class NinjaScript : MonoBehaviour
                         default:
                             break;
                     }
-                    //if (GameSupportLevel.Equals("High Assistance"))
-                    //{
-                    //    assistanceLevel = rnd.Next(70,80);
-                    //}
-                    //else if (mainScript.difficultyLevel == MainScript.Difficulty.HighTrajectory)
-                    //{
-                    //    assistanceLevel = rnd.Next(70,80);
-                    //}
-                    //else if (mainScript.difficultyLevel == MainScript.Difficulty.Neutral)
-                    //{
-                    //    assistanceLevel = rnd.Next(0, 0);
-                    //}
-                    //else if (mainScript.difficultyLevel == MainScript.Difficulty.LowHindrance)
-                    //{
-                    //    hindranceLevel = rnd.Next(50, 60);
-                    //}
-                    //else if (mainScript.difficultyLevel == MainScript.Difficulty.HighHindrance)
-                    //{
-                    //    hindranceLevel = rnd.Next(80, 120);                        
-                    //}
-                    //else if (mainScript.difficultyLevel == MainScript.Difficulty.Mixed)
-                    //{
-                    //    Debug.Log("!!! WARNING: You are not supposed to set Mixed Difficulty in RTM !!!");
-                    //}
-                    if (assistanceLevel != 0) assistanceLevel = assistanceLevel / 100F;
-                    if (hindranceLevel != 0) hindranceLevel = hindranceLevel / 100F;
+
+                    if (assistanceLevel != 0)
+                    {
+                        assistanceLevel = assistanceLevel / 100F;
+                    }
+                    else if (hindranceLevel != 0)
+                    {
+                        hindranceLevel = hindranceLevel / 100F;
+                    }
                 }
 
                 // Calculated Assistance or Hindrance
@@ -323,7 +304,7 @@ public class NinjaScript : MonoBehaviour
             // No magnetism needed for other poles
             else
             {
-                if (mainScript.MagnetismOn)
+                if (mainScript.magnetismOn)
                     pole.GetComponentInChildren<PointEffector2D>().enabled = false;
             }
             counter++;
@@ -356,11 +337,6 @@ public class NinjaScript : MonoBehaviour
             float diff_bet_velocity = Math.Abs(requiredVelocity - inputVelocity);
 
             // For the Assistance Case
-            //if ((mainScript.difficultyLevel == MainScript.Difficulty.HighTrajectory)
-            //    || (mainScript.difficultyLevel == MainScript.Difficulty.LowTrajectory)
-            //    || (mainScript.difficultyLevel == MainScript.Difficulty.Neutral)
-            //    || (mainScript.difficultyLevel == MainScript.Difficulty.Mixed
-            //    && assistanceLevel !=0))
             if(GameSupportLevel.Equals("High Assistance") || GameSupportLevel.Equals("Low Assistance") || GameSupportLevel.Equals("Neutral") && assistanceLevel != 0)
             {
                 if (diff_bet_velocity <= 0.25F) ; //Debug.Log("No Assistance is provided"); // do nothing 
@@ -375,11 +351,7 @@ public class NinjaScript : MonoBehaviour
             }
 
             // For the Hindrance Case
-            //else if ((mainScript.difficultyLevel == MainScript.Difficulty.HighHindrance)
-            //    || (mainScript.difficultyLevel == MainScript.Difficulty.LowHindrance)
-            //    || (mainScript.difficultyLevel == MainScript.Difficulty.Mixed
-            //    && hindranceLevel != 0))
-            if (GameSupportLevel.Equals("High Hindrance") || GameSupportLevel.Equals("Low Hindrance") && hindranceLevel != 0)
+            else if (GameSupportLevel.Equals("High Hindrance") || GameSupportLevel.Equals("Low Hindrance") && hindranceLevel != 0)
             {
                 // The player was already supposed to lose
                 if (diff_bet_velocity >= 1.00F)
@@ -536,13 +508,14 @@ public class NinjaScript : MonoBehaviour
             var ray = GetComponent<rayCastLogic>();
             if (ray.isSpotted())
             {
+                // Update Score
                 ScoreAdded(collider.gameObject.name);
+                
+                // Set player to !Alive to stop further mouse button click
                 MainScript.playerIsAlive = false;
+                
                 // Start running
                 animator.SetBool("doRun", true);
-                GameObject playerObject = GameObject.FindGameObjectWithTag("Player");
-                //playerObject.GetComponentInChildren<TrailRenderer>().enabled = false;
-
 
                 // Log 
                 logger.loggerMethod(1, poleDistance_fl, poleHeight, "PoleEnd", "0", "0", score, "null", "poleEnd", distanceOfNearestPoleXPosition, assistanceLevel, hindranceLevel);
@@ -569,8 +542,8 @@ public class NinjaScript : MonoBehaviour
         string currentPoleFric = currentPoleFriction;
         string currentPoleMagAr = currentPoleMagnetismArea;
 
-        // setting a weird method to check whether ray still can be spotted or not !
-        // here, we are setting a short amount of delay when the player has certain level of velocity 
+        // Setting a weird algorithm to check whether ray still can be spotted or not !
+        // Here, we are setting a short amount of delay when the player has certain level of velocity 
         float playersXvelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity.x;
         if (playersXvelocity > 3)
             yield return new WaitForSeconds(0.75F);
@@ -717,15 +690,10 @@ public class NinjaScript : MonoBehaviour
         foreach (GameObject o in UnityEngine.Object.FindObjectsOfType<GameObject>())
             Destroy(o);
         Application.ExternalCall("EndScene");
-        //MainScript.openWindow(MainScript.server_url + MainScript.next_page_after_game_end);
-        //Application.OpenURL(MainScript.server_url + MainScript.next_page_after_game_end);     // Calling the next endgame url
     }
 
     IEnumerator GameEnd() {
         yield return new WaitForSeconds(1);     // wait for one seconds
-                                                //Time.timeScale = 0.5F;
-
-        //Application.OpenURL(server_url + "/endgame");
         
         // Enable Canvas section 
         GameObject canvasObject = GameObject.Find("Canvas");
@@ -768,6 +736,7 @@ public class NinjaScript : MonoBehaviour
             StartCoroutine(playGameAnimation(panelImg, 0.05F));
     }
 }
+
 //public class Debug
 //{
 //    public static void Log(object obj)

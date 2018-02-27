@@ -77,7 +77,6 @@ public class MainMenu : MonoBehaviour {
     {
         dayLightToggle = !dayLightToggle;
         PlayerPrefs.SetString("DayLight", dayLightToggle.ToString());
-        //Debug.Log(PlayerPrefs.GetString("DayLight"));
     }
     public void BackButtonPressed()
     {

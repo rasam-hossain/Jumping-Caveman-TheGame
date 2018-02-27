@@ -30,11 +30,11 @@ public class MainScript : MonoBehaviour
 
     [Header("Game Assistance Type 01")]
     [Tooltip("Turn on the Magnetism?")]
-    public bool MagnetismOn = false;                // magnetism?on
+    public bool magnetismOn = false;                // magnetism?on
 
     [Header("Game Assistance Type 02")]
     [Tooltip("Turn on the Trajectory Assistance?")]
-    public bool TrajectoryAssistanceOn = false;     // Trajectory Assistance?on
+    public bool trajectoryAssistanceOn = false;     // Trajectory Assistance?on
 
     // Difficulty Level to set up manually
     public enum TypeOfAssitance
@@ -45,48 +45,35 @@ public class MainScript : MonoBehaviour
     [Tooltip("What is the current asssitance method?")]
     public TypeOfAssitance assistanceType = new TypeOfAssitance();
 
-    // Difficulty Level to set up manually
-    //public enum Difficulty
-    //{
-    //    HighTrajectory,
-    //    LowTrajectory,       
-    //    Neutral,
-    //    Mixed,
-    //    LowHindrance,
-    //    HighHindrance
-    //}
-    [Tooltip("What is the current difficulty?")]
-    //private string GameSupportLevel;
-
     [Header("Respawn")]
     public bool respawnPlayer;
 
     [Header("Input Config File")]
     [Tooltip("Which input file?")]
-    public string fileToLoad = "";                  // Which input file
+    public string fileToLoad = "";
     public static string refFileName;     
 
     [Header("Pole Objects")]
     [Tooltip("The Rock-look-a-like Pole Object")]
-    public GameObject poleObjectRock;           // the rock pole prefab
+    public GameObject poleObjectRock;               // the rock pole prefab
 
     [Tooltip("The Brick-look-a-like Pole Object")]
-    public GameObject poleObjectBrick;          // the brick pole prefab
+    public GameObject poleObjectBrick;              // the brick pole prefab
 
     [Tooltip("The Brick-look-a-like Pole Object with green grass on top")]
-    public GameObject poleObjectBrickAndGrass;  // the brick and glass pole prefab
+    public GameObject poleObjectBrickAndGrass;      // the brick and glass pole prefab
 
     [Tooltip("The Pipe-look-a-like Pole Object that has icy substance")]
-    public GameObject poleObjectPipeAndIce;     // the pipe and ice pole prefab
+    public GameObject poleObjectPipeAndIce;         // the pipe and ice pole prefab
 
     [Tooltip("The Ice-look-a-like Pole Object that has icy substance")]
-    public GameObject poleObjectIce;            // the ice pole prefab
+    public GameObject poleObjectIce;                // the ice pole prefab
 
     [Tooltip("The last pole")]
-    public GameObject poleEndObject;            // the last pole
+    public GameObject poleEndObject;                // the last pole
 
     [Tooltip("The last pole starting position")]
-    public GameObject startOfPoleEndObject;            // this special start position of this pole
+    public GameObject startOfPoleEndObject;         // this special start position of this pole
 
     [Header("Daylight Settings")]
     [Range(0, 1.5F)]
@@ -117,14 +104,13 @@ public class MainScript : MonoBehaviour
     public string url = "";
     //public static string server_url = "http://127.0.0.1:5000";
     public static string server_url = "http://hci-mturk.usask.ca:10030";
-    //public static string next_page_after_game_end = "/redirect_next_page";
 
+    /* Other boolean values */
     //Variables for Timer settings
     private bool calledOnce = false;
-    //public static MainScript instance;
+
+    // UpdateScore variable
     public static bool updateScore;
-    //Animator
-    //Animator animator;
 
     // To use the redirectLink plugin
     [DllImport("__Internal")]
@@ -133,7 +119,7 @@ public class MainScript : MonoBehaviour
     // This function is responsible to get executed whenever we launch the game
     void Start()
     {
-        // --  Default Game Options Settings --
+        /*  Default Game Options Settings -- */
 
         //DayLight Settings
         if (PlayerPrefs.GetString("DayLight").Equals("True"))
@@ -144,60 +130,41 @@ public class MainScript : MonoBehaviour
         // Total Game Time
         totalGameTime = 10.0F;
 
+
+        // Player offset while 
+        float playerOffsetFromPoleSurface = 5.7F;
+        float playerOffsetX = -3.41F;
+        float playerOffsetY = 11F;
+
         // Player Respwan Mechanism
         if (respawnPlayer)
         {
-            // player offset while 
-            float playerOffset = 5.7F;
-
             // If game has been already initialised then respawn from the last succeeded pole
-            if(StartScreenScript.gameInitialised == 0)
+            if (StartScreenScript.gameInitialised == 0)
             {
                 // Background is set according to player's current position
                 GameObject BG = GameObject.Find("BG");
-                BG.transform.position = new Vector2((NinjaScript.successivePoleX - (-3.41F)), 11F);
+                BG.transform.position = new Vector2((NinjaScript.successivePoleX - playerOffsetX), playerOffsetY);
 
                 // GameReset is called passing the poleX and poleY variables
                 // The offset 5.7F is the distance between the avatar and the pole
-                GameReset(NinjaScript.successivePoleX, NinjaScript.successivePoleY + playerOffset);
-               
+                GameReset(NinjaScript.successivePoleX, NinjaScript.successivePoleY + playerOffsetFromPoleSurface);
+
                 NinjaScript.GameOverCanvasReset = true;          // Set GameCanvasReset to True
                 updateScore = false;                             // Don't update Score here. Use the previous score
-                NinjaScript.poleNumber = Int32.Parse(NinjaScript.successivePoleName.Remove(0,4));
+                NinjaScript.poleNumber = Int32.Parse(NinjaScript.successivePoleName.Remove(0, 4));
             }
-            else GameReset(0, 11F); // else start from the beginning
+            else
+            {
+                GameReset(0, playerOffsetY); // else start from the beginning
+            }
         }
         // If Respawn player is off then always start from the beginning
         else
         {
-            GameReset(0, 11F);
+            GameReset(0, playerOffsetY);
             updateScore = true;
         }
-
-        //Set Game Support Level
-        //GameSupportLevel = PlayerPrefs.GetString("GameSupport");
-
-
-
-
-        // Type of Assistance
-        //TypeOfAssitance assistanceFromConfig = TypeOfAssitance.assistanceFromConfig;
-        //TypeOfAssitance RTM = TypeOfAssitance.randomThresholdMethod;
-
-        //Debug.Log("This is the selected Assistance Level:" + MainMenu.assistanceHindranceDropdown);
-        // Type of Game Difficulty
-        //Difficulty highT = Difficulty.HighTrajectory;
-        //Difficulty lowT = Difficulty.LowTrajectory;
-        //Difficulty neutral = Difficulty.Neutral;
-        //Difficulty mixed = Difficulty.Mixed;
-        //Difficulty lowHnd = Difficulty.LowHindrance;
-        //Difficulty highHnd = Difficulty.HighHindrance;
-
-        //Play the background music here !
-        //AudioSource audio = GetComponent<AudioSource>();
-        //if(!audio.isPlaying)
-        //audio.Play();
-        //Cursor.lockState = CursorLockMode.Confined;
 
 
         // url settings
@@ -206,21 +173,19 @@ public class MainScript : MonoBehaviour
 
     void GameReset(float _poleX, float _poleY)
     {
-        // We will instantiate each of the objects here sequentially
-        // Player Object
+        /*** We will instantiate each of the objects here sequentially ***/
         
+        // Player Object
         Instantiate(playerObject, new Vector2(_poleX, _poleY), Quaternion.identity);
         playerIsAlive = true;
         GameObject player = GameObject.FindGameObjectWithTag("Player");
         player.GetComponent<BoxCollider2D>().sharedMaterial = (PhysicsMaterial2D)Resources.Load("Material/1.0");
 
-        //RealTrailObject
+        //Fake Player/Real Trail Object
         Instantiate(realTrailObject, new Vector2(player.transform.position.x, player.transform.position.y), Quaternion.identity);
 
-        // Pole Object
-        // Depreciated - set all the poles directly from the file
-        //poleObject =(GameObject)Instantiate(poleObject, new Vector2(-3.6f,-3f), Quaternion.identity);   // placing the first pole object on the stage
-        placePole();    // Call the place pole function to instantiate all poles
+        // Function to place all pole objects
+        PlacePole();    
 
         // Power Bar Object                                                                                                                                                //poleObject.transform.position = new Vector2(-3.5f, -0.6f);  // setting the pole position
         Instantiate(powerBarObject);
@@ -240,7 +205,7 @@ public class MainScript : MonoBehaviour
         timePaused = false;
     }
 
-    void placePole()
+    void PlacePole()
     {
         // Columns of the config file is described here
         /*
@@ -257,13 +222,13 @@ public class MainScript : MonoBehaviour
 
         var columnX = new List<string>();                   // for first column of poleX position
         var columnY = new List<string>();                   // for second column of poleY position
-        var columnMagnetismLevel = new List<string>();      // This is for the magnetism level - third
+        var columnMagnetismLevel = new List<string>();      // for third column - magnetism
         var columnPoleType = new List<string>();            // for forth column of pole class
         var columnF = new List<string>();                   // for fifth column of pole friction
-        var columnMagnetismArea = new List<string>();       // This is for the magnetism area - sixth
+        var columnMagnetismArea = new List<string>();       // for sixth column - magnetism area 
 
         // Setting the directories for the file path
-        //Load the text file using Reources.Load
+        // Load the text file using Reources.Load
         TextAsset textFile = Resources.Load(fileToLoad) as TextAsset;
         refFileName = textFile.name;
         string fs = textFile.text;
@@ -280,7 +245,7 @@ public class MainScript : MonoBehaviour
             columnF.Add(values[4]);
             columnMagnetismArea.Add(values[5]);
         }
-        var counter = textFileLines.Length;
+        var counterForMagnetism = textFileLines.Length;
 
 
         // PoleObjects are the gameobject to hold that specific pole
@@ -290,7 +255,7 @@ public class MainScript : MonoBehaviour
 
 
         // This is responsible to place all the poles in proper position
-        for (int i = 0; i < counter; i++)
+        for (int i = 0; i < counterForMagnetism; i++)
         {
             //print("See the Pole instantiate is getting called");
             if (columnPoleType[i] == "1") 
@@ -315,12 +280,15 @@ public class MainScript : MonoBehaviour
         }
 
         ////Setting the Pole Magnetism
+        //* The magnetism effector seemed to be less effective to manipulate player experience and so it would be deprecated at later game versions *//
         // We will find the poles tagged with PoleMagnetism - which means only the collider area over the poles
         GameObject[] poleMagObjects;
         poleMagObjects = GameObject.FindGameObjectsWithTag("PoleMagnetism");
-        //float PoleFriction;
-        counter = 0;
-        //var rad = 0.0F;
+        
+        // Counter variable for calucalting the number of magnetism poles
+        counterForMagnetism = 0;
+
+        // Going though each poles in the file
         foreach (GameObject pole in poleMagObjects)
         {
             // If the currentPoleColl is the one where the player resides then don't turn on magnetism for that pole
@@ -328,10 +296,9 @@ public class MainScript : MonoBehaviour
 
 
             // Setting the point effector value over here
-            pole.GetComponentInChildren<PointEffector2D>().forceMagnitude = float.Parse(columnMagnetismLevel[counter].ToString());
+            pole.GetComponentInChildren<PointEffector2D>().forceMagnitude = float.Parse(columnMagnetismLevel[counterForMagnetism].ToString());
 
             //Calculate appropriate drag based on this magnetism
-            //Debug.Log(pole.GetComponentInChildren<PointEffector2D>().forceMagnitude);
             if (pole.GetComponentInChildren<PointEffector2D>().forceMagnitude == -30.0F)
             {
                 // Case 01 Highest Magnetism
@@ -351,16 +318,16 @@ public class MainScript : MonoBehaviour
                 // MagnetismArea gets calculated here based on the config file that we had
                 var rad = pole.GetComponentInChildren<CircleCollider2D>().radius;
 
-            if (columnMagnetismArea[counter].ToString() == "L")
+            if (columnMagnetismArea[counterForMagnetism].ToString() == "L")
                 rad = rad * 0.50F;
-            else if (columnMagnetismArea[counter].ToString() == "M")
+            else if (columnMagnetismArea[counterForMagnetism].ToString() == "M")
                 rad = rad * 0.75F;
             else
                 rad = rad * 1.00F;
 
             pole.GetComponentInChildren<CircleCollider2D>().radius = rad;
             pole.GetComponentInChildren<PointEffector2D>().enabled = false;             // set the magnetism false by default 
-            counter++;
+            counterForMagnetism++;
         }
 
 
@@ -368,13 +335,13 @@ public class MainScript : MonoBehaviour
         //// Setting the Pole Friction
         poleFrictionObjects = GameObject.FindGameObjectsWithTag("Pole");
         //Debug.Log(poleFrictionObjects.Length);
-        counter = 0;
+        counterForMagnetism = 0;
         foreach (GameObject pole in poleFrictionObjects)
         {
             // Setting the friction value over here
-            float frictionValue = float.Parse(columnF[counter].ToString());           
+            float frictionValue = float.Parse(columnF[counterForMagnetism].ToString());           
             pole.GetComponent<BoxCollider2D>().sharedMaterial = (PhysicsMaterial2D)Resources.Load("Material/" + frictionValue.ToString("0.00"));
-            counter++;
+            counterForMagnetism++;
         }
     }
 
@@ -482,13 +449,13 @@ public class MainScript : MonoBehaviour
 
         // Check the Magnetism Properties and trail renderer properties
         NinjaScript ninjaScript = playerObject.GetComponent("NinjaScript") as NinjaScript;
-        if (MagnetismOn)
+        if (magnetismOn)
             ninjaScript.magnetismOn = true;
         else
             ninjaScript.magnetismOn = false;
 
         // Check the Trajectory Assistance Properties and trail renderer properties
-        if (TrajectoryAssistanceOn)
+        if (trajectoryAssistanceOn)
             ninjaScript.trajectoryAssistanceOn = true;
         else
             ninjaScript.trajectoryAssistanceOn = false;
@@ -555,7 +522,9 @@ public class MainScript : MonoBehaviour
         float playersYvelocity = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>().velocity.y;
 
         // Mouse button is down, but ninja isn't jumping/falling (its y velocity is zero) and the ninja is not charging
-        if (Input.GetButtonDown("Fire1") && playersXvelocity == 0 && playersYvelocity == 0 && !isCharging && playerIsAlive && !timePaused)
+        if (Input.GetButtonDown("Fire1") 
+            && playersXvelocity == 0 && playersYvelocity == 0 
+            && !isCharging && playerIsAlive && !timePaused)
         {
             // check if the real trail exist or not
             if (GameObject.FindWithTag("RealTrail") != null)
@@ -570,7 +539,9 @@ public class MainScript : MonoBehaviour
         }
 
         // Mouse button released and the ninja is charging but not jumping/falling (its y velocity is zero) 
-        if (Input.GetButtonUp("Fire1") && playersXvelocity == 0 && playersYvelocity == 0 && isCharging && playerIsAlive && !timePaused)
+        if (Input.GetButtonUp("Fire1") 
+            && playersXvelocity == 0 && playersYvelocity == 0 
+            && isCharging && playerIsAlive && !timePaused)
         {
             isCharging = false;                                                             // player is no longer charging so set the isCharging to false
             GameObject powerObject = GameObject.FindWithTag("Power");                       // get the game object tagged as "Power"
@@ -585,12 +556,10 @@ public class MainScript : MonoBehaviour
     {
         yield return new WaitForSeconds(seconds);     // wait for several seconds
         
-        //// Destroy everything in the scene
+        //// Destroy everything in the scene to avoid any game scores getting updated
         foreach (GameObject o in UnityEngine.Object.FindObjectsOfType<GameObject>())
             Destroy(o);
         Application.ExternalCall("EndScene");
-        //openWindow(server_url + next_page_after_game_end);
-        //Application.OpenURL(server_url + next_page_after_game_end);
     }
 }
 

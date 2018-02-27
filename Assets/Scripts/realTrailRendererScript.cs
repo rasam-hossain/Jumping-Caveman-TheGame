@@ -39,12 +39,12 @@ public class realTrailRendererScript : MonoBehaviour {
         }
         else
         {
-            if(mainScript.TrajectoryAssistanceOn)
+            if(mainScript.trajectoryAssistanceOn)
             {
                 playerScoreWithoutAssistance = "0";
                 logger.loggerMethodFromRealTrail(playerScoreWithoutAssistance);
             }
-            else if (mainScript.MagnetismOn)
+            else if (mainScript.magnetismOn)
             {
                 playerScoreWithoutMagnetism = "0";
                 logger.loggerMethodFromRealTrail(playerScoreWithoutMagnetism);
@@ -64,12 +64,12 @@ public class realTrailRendererScript : MonoBehaviour {
         var ray = GetComponent<rayCastLogic>();
         if ( ray.spottedLeft == true || ray.spottedRight == true)
         {
-            if (mainScript.TrajectoryAssistanceOn)
+            if (mainScript.trajectoryAssistanceOn)
             {
                 playerScoreWithoutAssistance = "1";
                 logger.loggerMethodFromRealTrail(playerScoreWithoutAssistance);
             }
-            else if(mainScript.MagnetismOn)
+            else if(mainScript.magnetismOn)
             {
                 playerScoreWithoutMagnetism = "1";
                 logger.loggerMethodFromRealTrail(playerScoreWithoutMagnetism);
