@@ -1,4 +1,4 @@
-# Project Title
+# Jumping Caveman - The Game
 
 This is slightly bigger game slash research project with several game manipulating features. To remove user interaction, initially, the game could be configured through unity interface only using an input config file to create separate game conditions. For demonstration purpose and game playability, I started to add some of the features in the Game UI and made a separate game version which is linked above.
 
