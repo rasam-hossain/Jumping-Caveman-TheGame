@@ -43,7 +43,7 @@ A step by step series of examples that tell you have to get a development env ru
 
 ## Authors
 
-* **Rasam Bin Hossain
+* Rasam Bin Hossain (rasam.bin.hossain@usask.ca)
 
 
 
