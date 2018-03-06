@@ -49,7 +49,7 @@ A step by step series of examples that tell you have to get a development env ru
 
 ## License
 
-This project has not been licensed it!
+This project has not been licensed yet!
 
 ## Acknowledgments
 
