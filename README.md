@@ -3,6 +3,7 @@
 This is slightly bigger game slash research project with several game manipulating features. To remove user interaction, initially, the game could be configured through unity interface only using an input config file to create separate game conditions. For demonstration purpose and game playability, I started to add some of the features in the Game UI and made a separate game version which is linked above.
 
 Sample Abstract to the research: There are quite a few number of standard research methods exist for assessing player experience (pX); however, similar attention has not been paid towards tools for inducing pX. It is sometimes quite hectic for a game researcher to find adequate research tools which can be used to operationalize experimental factors of interest effectively without having proper technical knowledge. An open source custom game has been created that can be easily modified at a much finer time resolution to manipulate pX than has previously been done. Several research questions regarding in-game success or failure can be answered with the help of our tool without the researchers having a deep knowledge about the game mechanisms. Hence, performing controllable experiments would become much easier and less time-consuming in the context of Games User Research.
+To find the original day-to-day commits - the project can be found at https://git.cs.usask.ca/rbh706/JumpingCaveman
 
 ## Getting Started
 
